@@ -1,0 +1,28 @@
+import os
+
+# User se path input lein
+path = input("Enter the folder path: ")     # e.g. C:\Users\user\Desktop\images1
+path = path.replace('\\', '/')              # Windows ke backslash ko forward slash me badalna
+
+# Check karo folder exist karta hai ya nahi
+if not os.path.exists(path):
+    print("❌ Invalid path! Please check and try again.")
+else:
+    print(f"✅ Folder found: {path}")
+    print("📂 Files in folder:", os.listdir(path))
+
+    def main():
+        i = 0  # Counter for numbering
+        for filename in os.listdir(path):
+            # Only process image files
+            if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+                old_name = os.path.join(path, filename)  # Full path of old file
+                ext = os.path.splitext(filename)[1]      # Get original extension
+                new_name = os.path.join(path, f"car{i}{ext}")  # New name with same extension
+
+                os.rename(old_name, new_name)            # Rename the file
+                print(f"✅ Renamed: {filename} ➜ car{i}{ext}")
+                i += 1
+
+    # Function call
+    main()
